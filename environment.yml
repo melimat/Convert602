@@ -1,0 +1,6 @@
+name: convert602
+
+dependencies:
+  - python=3.8
+  - pip:
+    - python-docx
