@@ -9,7 +9,6 @@ def process_docx_document(read_file_path):
     for index, content in enumerate(document.paragraphs):
         whole_text += content.text + "\r\n"
 
-    
     return whole_text
 
 process_docx_document(read_file_path)

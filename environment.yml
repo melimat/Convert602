@@ -4,3 +4,5 @@ dependencies:
   - python=3.8
   - pip:
     - python-docx
+    - PyPDF2
+    - pdfminer.six
