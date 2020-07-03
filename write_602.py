@@ -1,12 +1,5 @@
-def write_to_602(text_to_write, filename):
+def write_to_602(text_to_write, filename, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int):
     ct_int = 1 #unknown purpose
-    lm_int = 1 #left margin
-    rm_int = 65 #right margin
-    pl_int = 55 #page length
-    mt_int = 3 #top margin
-    mb_int = 3 #bottom margin
-    po_int = 5 #print from column
-    pn_int = 1 #print from page number
     lh_int = 4 #unknown purpose
 
     ct_str = "@CT " + str(ct_int)

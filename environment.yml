@@ -5,3 +5,4 @@ dependencies:
   - pip:
     - python-docx
     - pdfminer.six
+    - pyautogui
