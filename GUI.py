@@ -4,6 +4,8 @@ from tkinter import *
 class GUI():
     def __init__(self):
         self.root = tkinter.Tk()
+        self.root.title("Convert602")
+
         self.path_label = tkinter.Label(self.root, text="Vstupní soubor").grid(row=0, column=0)
         self.path_to_input_entry = tkinter.Entry(self.root)
         self.path_to_input_entry.grid(row=0, column=1)
