@@ -5,7 +5,7 @@ from tkinter import *
 from convert import convert
 
 class GUI():
-    def __init__(self):
+    def __init__(self, dos_dir_path, dosbox_path):
         self.dos_dir_path = "C:\DOS"
         self.dosbox_path = "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"
 
@@ -131,5 +131,3 @@ class GUI():
         self.filename = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = (("docx files","*.docx"),("PDF files","*.pdf")))
         self.path_to_input_entry.delete(0, "end")
         self.path_to_input_entry.insert(0, self.filename)
-
-gui = GUI()
