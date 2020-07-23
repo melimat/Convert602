@@ -6,10 +6,10 @@ from write_602 import write_to_602
 from open_dosbox import open_dosbox
 
 def convert(input_file_path, output_file_name, dos_dir_path, dosbox_path, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int):
-
-    if input_file_path.split(".")[1] == "docx":
+    file_type = determine_file_type(input_file_path)
+    if file_type == "docx":
         document_text = process_docx_document(input_file_path)
-    elif input_file_path.split(".")[1] == "pdf":
+    elif file_type == "pdf":
         document_text = process_pdf_document(input_file_path)
     else:
         return
@@ -18,3 +18,7 @@ def convert(input_file_path, output_file_name, dos_dir_path, dosbox_path, lm_int
 
     write_to_602(document_text, output_file_path, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
     open_dosbox(dosbox_path, output_file_name)
+
+def determine_file_type(path):
+    dot_splitted_list = path.split(".")
+    return dot_splitted_list[len(dot_splitted_list) - 1]

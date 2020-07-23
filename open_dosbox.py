@@ -5,7 +5,6 @@ import pyautogui
 
 def open_dosbox(dosbox_path, filename):
     document_string = "{0}.602".format(filename)
-    print(document_string)
 
     os.system('start "" "' + dosbox_path + '"')
     time.sleep(5)
