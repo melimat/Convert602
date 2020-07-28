@@ -19,6 +19,7 @@ def main():
     else:
         return
 
+    tab_len_int = 4 #tab lenght
     lm_int = 1 #left margin
     rm_int = 65 #right margin
     pl_int = 55 #page length
@@ -31,7 +32,7 @@ def main():
     output_file_path = "{0}\{1}.602".format(dos_dir_path, output_file_name)
     dosbox_path = "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"
 
-    write_to_602(document_text, output_file_path, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
+    write_to_602(document_text, output_file_path, tab_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
     open_dosbox(dosbox_path, output_file_name)
 
 main()

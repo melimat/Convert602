@@ -9,6 +9,7 @@ class GUI():
         self.dos_dir_path = "C:\DOS"
         self.dosbox_path = "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"
 
+        self.tb_len_int = 6
         self.lm_int = 1
         self.rm_int = 65
         self.pl_int = 55
@@ -30,27 +31,30 @@ class GUI():
         self.output_file_name_entry = tkinter.Entry(self.root)
         self.output_file_name_entry.grid(row=1, column=1)
 
-        self.lm_label = tkinter.Label(self.root, text="Levý okraj").grid(row=3, column=0)
+        self.tb_label = tkinter.Label(self.root, text="Délka tabelátoru").grid(row=3, column=0)
+        self.tb_entry = tkinter.Entry(self.root, state="readonly")
+        self.tb_entry.grid(row=3, column=1)
+        self.lm_label = tkinter.Label(self.root, text="Levý okraj").grid(row=4, column=0)
         self.lm_entry = tkinter.Entry(self.root, state="readonly")
-        self.lm_entry.grid(row=3, column=1)
-        self.rm_label = tkinter.Label(self.root, text="Pravý okraj").grid(row=4, column=0)
+        self.lm_entry.grid(row=4, column=1)
+        self.rm_label = tkinter.Label(self.root, text="Pravý okraj").grid(row=5, column=0)
         self.rm_entry = tkinter.Entry(self.root, state="readonly")
-        self.rm_entry.grid(row=4, column=1)
-        self.pl_label = tkinter.Label(self.root, text="Délka stránky").grid(row=5, column=0)
+        self.rm_entry.grid(row=5, column=1)
+        self.pl_label = tkinter.Label(self.root, text="Délka stránky").grid(row=6, column=0)
         self.pl_entry = tkinter.Entry(self.root, state="readonly")
-        self.pl_entry.grid(row=5, column=1)
-        self.mt_label = tkinter.Label(self.root, text="Horní okraj").grid(row=6, column=0)
+        self.pl_entry.grid(row=6, column=1)
+        self.mt_label = tkinter.Label(self.root, text="Horní okraj").grid(row=7, column=0)
         self.mt_entry = tkinter.Entry(self.root, state="readonly")
-        self.mt_entry.grid(row=6, column=1)
-        self.mb_label = tkinter.Label(self.root, text="Spodní okraj").grid(row=7, column=0)
+        self.mt_entry.grid(row=7, column=1)
+        self.mb_label = tkinter.Label(self.root, text="Spodní okraj").grid(row=8, column=0)
         self.mb_entry = tkinter.Entry(self.root, state="readonly")
-        self.mb_entry.grid(row=7, column=1)
-        self.po_label = tkinter.Label(self.root, text="Tisk od sloupce").grid(row=8, column=0)
+        self.mb_entry.grid(row=8, column=1)
+        self.po_label = tkinter.Label(self.root, text="Tisk od sloupce").grid(row=9, column=0)
         self.po_entry = tkinter.Entry(self.root, state="readonly")
-        self.po_entry.grid(row=8, column=1)
-        self.pn_label = tkinter.Label(self.root, text="Tisk od stránky").grid(row=9, column=0)
+        self.po_entry.grid(row=9, column=1)
+        self.pn_label = tkinter.Label(self.root, text="Tisk od stránky").grid(row=10, column=0)
         self.pn_entry = tkinter.Entry(self.root, state="readonly")
-        self.pn_entry.grid(row=9, column=1)
+        self.pn_entry.grid(row=10, column=1)
 
         self.set_default_values()        
 
@@ -60,10 +64,10 @@ class GUI():
         self.adjust_checkbutton.grid(row=2, column=1)
 
         self.run_conversion_button = tkinter.Button(self.root, text="Provést převod", command=self.run_conversion)
-        self.run_conversion_button.grid(row=10, column=1)
+        self.run_conversion_button.grid(row=11, column=1)
 
         self.storno_button = tkinter.Button(self.root, text="Storno", command=self.destroy_window)
-        self.storno_button.grid(row=10, column=2)
+        self.storno_button.grid(row=11, column=2)
 
         self.root.mainloop()
 
@@ -77,6 +81,7 @@ class GUI():
         input_file_path = self.path_to_input_entry.get()
         output_file_name = self.output_file_name_entry.get()
 
+        tb_len_int = int(self.tb_entry.get())
         lm_int = int(self.lm_entry.get())
         rm_int = int(self.rm_entry.get())
         pl_int = int(self.pl_entry.get())
@@ -86,13 +91,15 @@ class GUI():
         pn_int = int(self.pn_entry.get())
 
         convert(input_file_path, output_file_name, self.dos_dir_path, self.dosbox_path,
-        lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
+        tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
 
     def destroy_window(self):
         self.root.destroy()
     
     def set_default_values(self):
         self.set_state_normal()
+        self.tb_entry.delete(0, "end")
+        self.tb_entry.insert(0, str(self.tb_len_int))
         self.lm_entry.delete(0, "end")
         self.lm_entry.insert(0, str(self.lm_int))
         self.rm_entry.delete(0, "end")
@@ -110,6 +117,7 @@ class GUI():
         self.set_state_readonly()
 
     def set_state_normal(self):
+        self.tb_entry.config(state="normal")
         self.lm_entry.config(state="normal")
         self.rm_entry.config(state="normal")
         self.pl_entry.config(state="normal")
@@ -119,6 +127,7 @@ class GUI():
         self.pn_entry.config(state="normal")
 
     def set_state_readonly(self):
+        self.tb_entry.config(state="readonly")
         self.lm_entry.config(state="readonly")
         self.rm_entry.config(state="readonly")
         self.pl_entry.config(state="readonly")
