@@ -9,6 +9,8 @@ class GUI():
         self.dos_dir_path = "C:\DOS"
         self.dosbox_path = "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"
 
+        self.initial_dir = "/"
+
         self.tb_len_int = 6
         self.lm_int = 1
         self.rm_int = 65
@@ -21,53 +23,63 @@ class GUI():
         self.root = tkinter.Tk()
         self.root.title("Convert602")
 
-        self.path_label = tkinter.Label(self.root, text="Vstupní soubor").grid(row=0, column=0)
+        self.open_dosbox_label = tkinter.Label(self.root, text="Otevřít DOSBox").grid(row=0, column=0)
+        self.dosbox_state_int = IntVar(self.root)
+        self.open_dosbox_checkbox = tkinter.Checkbutton(self.root, variable=self.dosbox_state_int, onvalue=1, offvalue=0, command=self.change_dosbox_state)
+        self.open_dosbox_checkbox.grid(row=0, column=1)
+
+        self.path_label = tkinter.Label(self.root, text="Vstupní soubor").grid(row=1, column=0)
         self.path_to_input_entry = tkinter.Entry(self.root)
-        self.path_to_input_entry.grid(row=0, column=1)
-        self.browse_button = tkinter.Button(self.root, text="Vyber soubor", command=self.get_path_to_input_file)
-        self.browse_button.grid(row=0, column=2)
+        self.path_to_input_entry.grid(row=1, column=1)
+        self.browse_input_button = tkinter.Button(self.root, text="Vyber soubor", command=self.get_path_to_input_file)
+        self.browse_input_button.grid(row=1, column=2)
 
-        self.output_file_label = tkinter.Label(self.root, text="Název výstupního souboru").grid(row=1, column=0)
-        self.output_file_name_entry = tkinter.Entry(self.root)
-        self.output_file_name_entry.grid(row=1, column=1)
+        self.output_file_label = tkinter.Label(self.root, text="Výstupní soubor").grid(row=2, column=0)
+        self.output_file_path_entry = tkinter.Entry(self.root)
+        self.output_file_path_entry.grid(row=2, column=1)
+        self.browse_output_button = tkinter.Button(self.root, text="Vyber soubor", command=self.get_path_to_output_file)
+        self.browse_output_button.grid(row=2, column=2)
 
-        self.tb_label = tkinter.Label(self.root, text="Délka tabelátoru").grid(row=3, column=0)
+        self.tb_label = tkinter.Label(self.root, text="Délka tabelátoru").grid(row=4, column=0)
         self.tb_entry = tkinter.Entry(self.root, state="readonly")
-        self.tb_entry.grid(row=3, column=1)
-        self.lm_label = tkinter.Label(self.root, text="Levý okraj").grid(row=4, column=0)
+        self.tb_entry.grid(row=4, column=1)
+        self.lm_label = tkinter.Label(self.root, text="Levý okraj").grid(row=5, column=0)
         self.lm_entry = tkinter.Entry(self.root, state="readonly")
-        self.lm_entry.grid(row=4, column=1)
-        self.rm_label = tkinter.Label(self.root, text="Pravý okraj").grid(row=5, column=0)
+        self.lm_entry.grid(row=5, column=1)
+        self.rm_label = tkinter.Label(self.root, text="Pravý okraj").grid(row=6, column=0)
         self.rm_entry = tkinter.Entry(self.root, state="readonly")
-        self.rm_entry.grid(row=5, column=1)
-        self.pl_label = tkinter.Label(self.root, text="Délka stránky").grid(row=6, column=0)
+        self.rm_entry.grid(row=6, column=1)
+        self.pl_label = tkinter.Label(self.root, text="Délka stránky").grid(row=7, column=0)
         self.pl_entry = tkinter.Entry(self.root, state="readonly")
-        self.pl_entry.grid(row=6, column=1)
-        self.mt_label = tkinter.Label(self.root, text="Horní okraj").grid(row=7, column=0)
+        self.pl_entry.grid(row=7, column=1)
+        self.mt_label = tkinter.Label(self.root, text="Horní okraj").grid(row=8, column=0)
         self.mt_entry = tkinter.Entry(self.root, state="readonly")
-        self.mt_entry.grid(row=7, column=1)
-        self.mb_label = tkinter.Label(self.root, text="Spodní okraj").grid(row=8, column=0)
+        self.mt_entry.grid(row=8, column=1)
+        self.mb_label = tkinter.Label(self.root, text="Spodní okraj").grid(row=9, column=0)
         self.mb_entry = tkinter.Entry(self.root, state="readonly")
-        self.mb_entry.grid(row=8, column=1)
-        self.po_label = tkinter.Label(self.root, text="Tisk od sloupce").grid(row=9, column=0)
+        self.mb_entry.grid(row=9, column=1)
+        self.po_label = tkinter.Label(self.root, text="Tisk od sloupce").grid(row=10, column=0)
         self.po_entry = tkinter.Entry(self.root, state="readonly")
-        self.po_entry.grid(row=9, column=1)
-        self.pn_label = tkinter.Label(self.root, text="Tisk od stránky").grid(row=10, column=0)
+        self.po_entry.grid(row=10, column=1)
+        self.pn_label = tkinter.Label(self.root, text="Tisk od stránky").grid(row=11, column=0)
         self.pn_entry = tkinter.Entry(self.root, state="readonly")
-        self.pn_entry.grid(row=10, column=1)
+        self.pn_entry.grid(row=11, column=1)
 
         self.set_default_values()        
 
-        self.adjust_label = tkinter.Label(self.root, text="Upřesnit parametry souboru T602").grid(row=2, column=0)
+        self.adjust_label = tkinter.Label(self.root, text="Upřesnit parametry souboru T602").grid(row=3, column=0)
         self.state_int = IntVar()
         self.adjust_checkbutton = tkinter.Checkbutton(self.root, variable=self.state_int, onvalue=1, offvalue=0, command=self.change_visibilty_state)
-        self.adjust_checkbutton.grid(row=2, column=1)
+        self.adjust_checkbutton.grid(row=3, column=1)
+
+        self.settings_button = tkinter.Button(self.root, text="Nastavení", command=self.settings_window)
+        self.settings_button.grid(row=12, column=0)
 
         self.run_conversion_button = tkinter.Button(self.root, text="Provést převod", command=self.run_conversion)
-        self.run_conversion_button.grid(row=11, column=1)
+        self.run_conversion_button.grid(row=12, column=1)
 
         self.storno_button = tkinter.Button(self.root, text="Storno", command=self.destroy_window)
-        self.storno_button.grid(row=11, column=2)
+        self.storno_button.grid(row=12, column=2)
 
         self.root.mainloop()
 
@@ -77,9 +89,17 @@ class GUI():
         elif self.state_int.get() == 0:
             self.set_default_values()
 
+    def change_dosbox_state(self):
+        if self.dosbox_state_int.get() == 1:
+            self.initial_dir = "C:\DOS"
+            self.open_dosbox_bool = True
+        elif self.dosbox_state_int.get() == 0:
+            self.initial_dir = "/"
+            self.open_dosbox_bool = False
+
     def run_conversion(self):
         input_file_path = self.path_to_input_entry.get()
-        output_file_name = self.output_file_name_entry.get()
+        output_file_path = self.output_file_path_entry.get()
 
         tb_len_int = int(self.tb_entry.get())
         lm_int = int(self.lm_entry.get())
@@ -90,7 +110,7 @@ class GUI():
         po_int = int(self.po_entry.get())
         pn_int = int(self.pn_entry.get())
 
-        convert(input_file_path, output_file_name, self.dos_dir_path, self.dosbox_path,
+        convert(input_file_path, output_file_path, self.dos_dir_path, self.dosbox_path,
         tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
 
     def destroy_window(self):
@@ -137,6 +157,53 @@ class GUI():
         self.pn_entry.config(state="readonly")
     
     def get_path_to_input_file(self):
-        self.filename = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = (("docx files","*.docx"),("PDF files","*.pdf")))
+        filename = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = (("docx files","*.docx"),("PDF files","*.pdf")))
         self.path_to_input_entry.delete(0, "end")
-        self.path_to_input_entry.insert(0, self.filename)
+        self.path_to_input_entry.insert(0, filename)
+
+    def get_path_to_output_file(self):
+        output_file_path = filedialog.asksaveasfilename(initialdir=self.initial_dir, filetypes=[("T602 Files", '*.602')])
+        if ".602" not in output_file_path and len(output_file_path) !=0:
+            output_file_path += ".602"
+        self.output_file_path_entry.delete(0, "end")
+        self.output_file_path_entry.insert(0, output_file_path)
+    
+    def settings_window(self):
+        self.top = tkinter.Toplevel(self.root)
+
+        self.top.title("Možnosti")
+
+        dosbox_path_label = tkinter.Label(self.top, text="Aplikace dosbox").grid(row=0, column=0)
+        self.dosbox_path_entry = tkinter.Entry(self.top)
+        self.dosbox_path_entry.grid(row=0, column=1)
+        dosbox_path_browse_button = tkinter.Button(self.top, text="Vyber soubor", command=self.get_dosbox_path)
+        dosbox_path_browse_button.grid(row=0, column=2)
+
+        dos_dir_label = tkinter.Label(self.top, text="Kořenový adresář DOS").grid(row=1, column=0)
+        self.dos_dir_entry = tkinter.Entry(self.top)
+        self.dos_dir_entry.grid(row=1, column=1)
+        dos_dir_browse_button = tkinter.Button(self.top, text="Vyber adresář", command=self.get_dos_dir)
+        dos_dir_browse_button.grid(row=1, column=2)
+
+        apply_settings_button = tkinter.Button(self.top, text="Aplikovat nastavení", command=self.apply_settings)
+        apply_settings_button.grid(row=2, column=1)
+
+        exit_settings_button = tkinter.Button(self.top, text="Storno", command=self.exit_settings)
+        exit_settings_button.grid(row=2, column=2)
+    
+    def get_dosbox_path(self):
+        dosbox_path = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = [("executable files","*.exe")])
+        self.dosbox_path_entry.delete(0, "end")
+        self.dosbox_path_entry.insert(0, dosbox_path)
+
+    def get_dos_dir(self):
+        dos_dir_path = filedialog.askdirectory()
+        self.dos_dir_entry.delete(0, "end")
+        self.dos_dir_entry.insert(0, dos_dir_path)
+
+    def apply_settings(self):
+        pass
+
+    def exit_settings(self):
+        self.top.destroy()
+
