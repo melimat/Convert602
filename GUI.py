@@ -1,13 +1,14 @@
 import tkinter
 from tkinter import filedialog
+from tkinter import messagebox
 from tkinter import *
 
 from convert import convert
+from Config_handler import Config_handler
 
 class GUI():
-    def __init__(self, dos_dir_path, dosbox_path):
-        self.dos_dir_path = "C:\DOS"
-        self.dosbox_path = "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"
+    def __init__(self):
+        self.config = Config_handler("Convert602.ini")
 
         self.initial_dir = "/"
 
@@ -91,7 +92,7 @@ class GUI():
 
     def change_dosbox_state(self):
         if self.dosbox_state_int.get() == 1:
-            self.initial_dir = "C:\DOS"
+            self.initial_dir = self.config.dos_dir_path
             self.open_dosbox_bool = True
         elif self.dosbox_state_int.get() == 0:
             self.initial_dir = "/"
@@ -110,8 +111,15 @@ class GUI():
         po_int = int(self.po_entry.get())
         pn_int = int(self.pn_entry.get())
 
-        convert(input_file_path, output_file_path, self.dos_dir_path, self.dosbox_path,
+        if self.config.incomplete_config == True and self.open_dosbox_bool == True:
+            messagebox.showerror("Error", "Konfigurace programu není kompletní, upřesni v nastavení.")
+            return
+        
+        convert(self.open_dosbox_bool, input_file_path, output_file_path, self.config.dos_dir_path, self.config.dosbox_path,
         tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
+
+        if self.open_dosbox_bool == False:
+            messagebox.showinfo("Konverze dokončena", "Konverze dokončena")
 
     def destroy_window(self):
         self.root.destroy()
@@ -176,12 +184,14 @@ class GUI():
         dosbox_path_label = tkinter.Label(self.top, text="Aplikace dosbox").grid(row=0, column=0)
         self.dosbox_path_entry = tkinter.Entry(self.top)
         self.dosbox_path_entry.grid(row=0, column=1)
+        self.dosbox_path_entry.insert(0, self.config.dosbox_path)
         dosbox_path_browse_button = tkinter.Button(self.top, text="Vyber soubor", command=self.get_dosbox_path)
         dosbox_path_browse_button.grid(row=0, column=2)
 
         dos_dir_label = tkinter.Label(self.top, text="Kořenový adresář DOS").grid(row=1, column=0)
         self.dos_dir_entry = tkinter.Entry(self.top)
         self.dos_dir_entry.grid(row=1, column=1)
+        self.dos_dir_entry.insert(0, self.config.dos_dir_path)
         dos_dir_browse_button = tkinter.Button(self.top, text="Vyber adresář", command=self.get_dos_dir)
         dos_dir_browse_button.grid(row=1, column=2)
 
@@ -202,7 +212,11 @@ class GUI():
         self.dos_dir_entry.insert(0, dos_dir_path)
 
     def apply_settings(self):
-        pass
+        dos_dir_path = self.dos_dir_entry.get()
+        dosbox_path = self.dosbox_path_entry.get()
+
+        self.config.write_config(dos_dir_path, dosbox_path)
+        self.exit_settings()
 
     def exit_settings(self):
         self.top.destroy()

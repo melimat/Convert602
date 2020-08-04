@@ -12,9 +12,8 @@ class Config_handler():
         files_list = os.listdir()
 
         if (config_file_name in files_list):
-            self.config_exists = True
+            self.read_config()
         else:
-            self.config_exists = False
             self.write_config("", "")
 
     def write_config(self, dos_dir_path, dosbox_app_path):
@@ -23,8 +22,17 @@ class Config_handler():
 
         with open(self.config_file_name, "w") as config_file:
             self.sample_config.write(config_file)
+        
+        self.read_config()
 
     def read_config(self):
-        pass
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.read(self.config_file_name)
 
-cfg_handler = Config_handler("Convert602.ini")
+        self.dos_dir_path = config["DOSBox"]["dos_dir_path"]
+        self.dosbox_path = config["DOSBox"]["dosbox_app_path"]
+
+        if len(self.dos_dir_path) == 0 or len(self.dosbox_path) == 0:
+            self.incomplete_config = True
+        else:
+            self.incomplete_config = False
