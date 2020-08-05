@@ -11,6 +11,7 @@ class GUI():
         self.config = Config_handler("Convert602.ini")
 
         self.initial_dir = "/"
+        self.open_dosbox_bool = False
 
         self.tb_len_int = 6
         self.lm_int = 1
