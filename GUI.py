@@ -203,7 +203,7 @@ class GUI():
         exit_settings_button.grid(row=2, column=2)
     
     def get_dosbox_path(self):
-        dosbox_path = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = [("executable files","*.exe")])
+        dosbox_path = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = [("executable files","*.exe"), ("all files", "*.*")])
         self.dosbox_path_entry.delete(0, "end")
         self.dosbox_path_entry.insert(0, dosbox_path)
 
