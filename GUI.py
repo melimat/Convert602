@@ -3,6 +3,8 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import *
 
+import webbrowser
+
 from convert import convert
 from Config_handler import Config_handler
 
@@ -82,6 +84,11 @@ class GUI():
 
         self.storno_button = tkinter.Button(self.root, text="Storno", command=self.destroy_window)
         self.storno_button.grid(row=12, column=2)
+
+        self.competition_text = tkinter.Label(self.root, text="Toto je soutěžní aplikce\n v soutěži ITnetwork summer 2020").grid(row=13, column=0)
+        self.itnetwork_url_link = tkinter.Label(self.root, text="https://www.itnetwork.cz/", fg="blue", cursor="hand2")
+        self.itnetwork_url_link.bind("<Button-1>",lambda e: self.itnetwork_url_callback())
+        self.itnetwork_url_link.grid(row=13, column=1)
 
         self.root.mainloop()
 
@@ -221,4 +228,7 @@ class GUI():
 
     def exit_settings(self):
         self.top.destroy()
+
+    def itnetwork_url_callback(self):
+        webbrowser.open_new("https://www.itnetwork.cz/")
 
