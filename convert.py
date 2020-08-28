@@ -2,7 +2,6 @@ import sys
 
 from read_docx import process_docx_document
 from Pdf_processor import Pdf_processor
-from read_pdf import process_pdf_document
 from write_602 import write_to_602
 from open_dosbox import open_dosbox
 
