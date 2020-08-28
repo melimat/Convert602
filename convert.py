@@ -10,7 +10,7 @@ def convert(open_dosbox_bool, input_file_path, output_file_path, dos_dir_path, d
     file_type = determine_file_type(input_file_path)
     if file_type == "docx":
         document_text = process_docx_document(input_file_path)
-        write_to_602(document_text, output_file_path, tab_len_int, lm_int,rm, pl_int, mt_int, mb_int, po_int, pn_int)
+        write_to_602(document_text, output_file_path, tab_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
         if open_dosbox_bool == True:
             open_dosbox(dosbox_path, output_file_path, dos_dir_path)
         
