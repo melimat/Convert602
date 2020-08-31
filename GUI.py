@@ -118,13 +118,14 @@ class GUI():
         mb_int = int(self.mb_entry.get())
         po_int = int(self.po_entry.get())
         pn_int = int(self.pn_entry.get())
+        chars_limit = int(self.config.chars_limit)
 
         if self.config.incomplete_config == True and self.open_dosbox_bool == True:
             messagebox.showerror("Error", "Konfigurace programu není kompletní, upřesni v nastavení.")
             return
         
-        convert(self.open_dosbox_bool, input_file_path, output_file_path, self.config.dos_dir_path, self.config.dosbox_path,
-        tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
+        convert(self.open_dosbox_bool, chars_limit, input_file_path, output_file_path, self.config.dos_dir_path,
+        self.config.dosbox_path, tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
 
         if self.open_dosbox_bool == False:
             messagebox.showinfo("Konverze dokončena", "Konverze dokončena")
@@ -203,11 +204,18 @@ class GUI():
         dos_dir_browse_button = tkinter.Button(self.top, text="Vyber adresář", command=self.get_dos_dir)
         dos_dir_browse_button.grid(row=1, column=2)
 
+        chars_limit_label = tkinter.Label(self.top, text="Maximální počet znaků pro T602 soubor").grid(row=2, column=0)
+        self.chars_limit_entry = tkinter.Entry(self.top)
+        self.chars_limit_entry.grid(row=2, column=1)
+        self.chars_limit_entry.insert(0, self.config.chars_limit)
+        self.reset_chars_limit_button = tkinter.Button(self.top, text="Nastavit výchozí hodnotu", command=self.set_default_chars_limit)
+        self.reset_chars_limit_button.grid(row=2, column=2)
+
         apply_settings_button = tkinter.Button(self.top, text="Aplikovat nastavení", command=self.apply_settings)
-        apply_settings_button.grid(row=2, column=1)
+        apply_settings_button.grid(row=3, column=1)
 
         exit_settings_button = tkinter.Button(self.top, text="Storno", command=self.exit_settings)
-        exit_settings_button.grid(row=2, column=2)
+        exit_settings_button.grid(row=3, column=2)
     
     def get_dosbox_path(self):
         dosbox_path = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = [("executable files","*.exe"), ("all files", "*.*")])
@@ -222,8 +230,9 @@ class GUI():
     def apply_settings(self):
         dos_dir_path = self.dos_dir_entry.get()
         dosbox_path = self.dosbox_path_entry.get()
+        chars_limit = self.chars_limit_entry.get()
 
-        self.config.write_config(dos_dir_path, dosbox_path)
+        self.config.write_config(dos_dir_path, dosbox_path, chars_limit)
         self.exit_settings()
 
     def exit_settings(self):
@@ -231,4 +240,8 @@ class GUI():
 
     def itnetwork_url_callback(self):
         webbrowser.open_new("https://www.itnetwork.cz/")
+
+    def set_default_chars_limit(self):
+        self.chars_limit_entry.delete(0, "end")
+        self.chars_limit_entry.insert(0, "260000")
 

@@ -8,12 +8,12 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
 
 class Pdf_processor:
-    def __init__(self, path_to_pdf_file):
+    def __init__(self, path_to_pdf_file, chars_limit):
         self.path_to_pdf_file = path_to_pdf_file
         self.is_text_segmented = bool(False)
         self.text_segments_list = []
         self.whole_text = str()
-        self.segment_length_limit = 260000
+        self.segment_length_limit = chars_limit
 
     def process_pdf_document(self):
 
