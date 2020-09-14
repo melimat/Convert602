@@ -11,7 +11,7 @@ from Localisations import Localistions
 
 class GUI():
     def __init__(self):
-        self.config = Config_handler("Convert602.ini")
+        self.config = Config_handler()
         self.localisations = Localistions() 
 
         self.initial_dir = "/"
