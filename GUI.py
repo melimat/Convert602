@@ -7,10 +7,12 @@ import webbrowser
 
 from convert import convert
 from Config_handler import Config_handler
+from Localisations import Localistions
 
 class GUI():
     def __init__(self):
         self.config = Config_handler("Convert602.ini")
+        self.localisations = Localistions() 
 
         self.initial_dir = "/"
         self.open_dosbox_bool = False
@@ -27,68 +29,83 @@ class GUI():
         self.root = tkinter.Tk()
         self.root.title("Convert602")
 
-        self.open_dosbox_label = tkinter.Label(self.root, text="Otevřít DOSBox").grid(row=0, column=0)
+        self.open_dosbox_label = tkinter.Label(self.root)
+        self.open_dosbox_label.grid(row=0, column=0)
         self.dosbox_state_int = IntVar(self.root)
         self.open_dosbox_checkbox = tkinter.Checkbutton(self.root, variable=self.dosbox_state_int, onvalue=1, offvalue=0, command=self.change_dosbox_state)
         self.open_dosbox_checkbox.grid(row=0, column=1)
 
-        self.path_label = tkinter.Label(self.root, text="Vstupní soubor").grid(row=1, column=0)
+        self.path_to_input_label = tkinter.Label(self.root)
+        self.path_to_input_label.grid(row=1, column=0)
         self.path_to_input_entry = tkinter.Entry(self.root)
         self.path_to_input_entry.grid(row=1, column=1)
-        self.browse_input_button = tkinter.Button(self.root, text="Vyber soubor", command=self.get_path_to_input_file)
+        self.browse_input_button = tkinter.Button(self.root, command=self.get_path_to_input_file)
         self.browse_input_button.grid(row=1, column=2)
 
-        self.output_file_label = tkinter.Label(self.root, text="Výstupní soubor").grid(row=2, column=0)
+        self.output_file_label = tkinter.Label(self.root)
+        self.output_file_label.grid(row=2, column=0)
         self.output_file_path_entry = tkinter.Entry(self.root)
         self.output_file_path_entry.grid(row=2, column=1)
-        self.browse_output_button = tkinter.Button(self.root, text="Vyber soubor", command=self.get_path_to_output_file)
+        self.browse_output_button = tkinter.Button(self.root, command=self.get_path_to_output_file)
         self.browse_output_button.grid(row=2, column=2)
 
-        self.tb_label = tkinter.Label(self.root, text="Délka tabelátoru").grid(row=4, column=0)
+        self.tb_label = tkinter.Label(self.root)
+        self.tb_label.grid(row=4, column=0)
         self.tb_entry = tkinter.Entry(self.root, state="readonly")
         self.tb_entry.grid(row=4, column=1)
-        self.lm_label = tkinter.Label(self.root, text="Levý okraj").grid(row=5, column=0)
+        self.lm_label = tkinter.Label(self.root)
+        self.lm_label.grid(row=5, column=0)
         self.lm_entry = tkinter.Entry(self.root, state="readonly")
         self.lm_entry.grid(row=5, column=1)
-        self.rm_label = tkinter.Label(self.root, text="Pravý okraj").grid(row=6, column=0)
+        self.rm_label = tkinter.Label(self.root)
+        self.rm_label.grid(row=6, column=0)
         self.rm_entry = tkinter.Entry(self.root, state="readonly")
         self.rm_entry.grid(row=6, column=1)
-        self.pl_label = tkinter.Label(self.root, text="Délka stránky").grid(row=7, column=0)
+        self.pl_label = tkinter.Label(self.root)
+        self.pl_label.grid(row=7, column=0)
         self.pl_entry = tkinter.Entry(self.root, state="readonly")
         self.pl_entry.grid(row=7, column=1)
-        self.mt_label = tkinter.Label(self.root, text="Horní okraj").grid(row=8, column=0)
+        self.mt_label = tkinter.Label(self.root)
+        self.mt_label.grid(row=8, column=0)
         self.mt_entry = tkinter.Entry(self.root, state="readonly")
         self.mt_entry.grid(row=8, column=1)
-        self.mb_label = tkinter.Label(self.root, text="Spodní okraj").grid(row=9, column=0)
+        self.mb_label = tkinter.Label(self.root)
+        self.mb_label.grid(row=9, column=0)
         self.mb_entry = tkinter.Entry(self.root, state="readonly")
         self.mb_entry.grid(row=9, column=1)
-        self.po_label = tkinter.Label(self.root, text="Tisk od sloupce").grid(row=10, column=0)
+        self.po_label = tkinter.Label(self.root)
+        self.po_label.grid(row=10, column=0)
         self.po_entry = tkinter.Entry(self.root, state="readonly")
         self.po_entry.grid(row=10, column=1)
-        self.pn_label = tkinter.Label(self.root, text="Tisk od stránky").grid(row=11, column=0)
+        self.pn_label = tkinter.Label(self.root)
+        self.pn_label.grid(row=11, column=0)
         self.pn_entry = tkinter.Entry(self.root, state="readonly")
         self.pn_entry.grid(row=11, column=1)
 
         self.set_default_values()        
 
-        self.adjust_label = tkinter.Label(self.root, text="Upřesnit parametry souboru T602").grid(row=3, column=0)
+        self.adjust_label = tkinter.Label(self.root)
+        self.adjust_label.grid(row=3, column=0)
         self.state_int = IntVar()
         self.adjust_checkbutton = tkinter.Checkbutton(self.root, variable=self.state_int, onvalue=1, offvalue=0, command=self.change_visibilty_state)
         self.adjust_checkbutton.grid(row=3, column=1)
 
-        self.settings_button = tkinter.Button(self.root, text="Nastavení", command=self.settings_window)
+        self.settings_button = tkinter.Button(self.root, command=self.settings_window)
         self.settings_button.grid(row=12, column=0)
 
-        self.run_conversion_button = tkinter.Button(self.root, text="Provést převod", command=self.run_conversion)
+        self.run_conversion_button = tkinter.Button(self.root, command=self.run_conversion)
         self.run_conversion_button.grid(row=12, column=1)
 
         self.storno_button = tkinter.Button(self.root, text="Storno", command=self.destroy_window)
         self.storno_button.grid(row=12, column=2)
 
-        self.competition_text = tkinter.Label(self.root, text="Toto je soutěžní aplikce\n v soutěži ITnetwork summer 2020").grid(row=13, column=0)
+        self.competition_text = tkinter.Label(self.root)
+        self.competition_text.grid(row=13, column=0)
         self.itnetwork_url_link = tkinter.Label(self.root, text="https://www.itnetwork.cz/", fg="blue", cursor="hand2")
         self.itnetwork_url_link.bind("<Button-1>",lambda e: self.itnetwork_url_callback())
         self.itnetwork_url_link.grid(row=13, column=1)
+
+        self.populate_all_main_window_text()
 
         self.root.mainloop()
 
@@ -121,14 +138,15 @@ class GUI():
         chars_limit = int(self.config.chars_limit)
 
         if self.config.incomplete_config == True and self.open_dosbox_bool == True:
-            messagebox.showerror("Error", "Konfigurace programu není kompletní, upřesni v nastavení.")
+            messagebox.showerror("Error", self.localisations.languages_dict[self.config.language]["message_config_not_complete"])
             return
         
         convert(self.open_dosbox_bool, chars_limit, input_file_path, output_file_path, self.config.dos_dir_path,
         self.config.dosbox_path, tb_len_int, lm_int, rm_int, pl_int, mt_int, mb_int, po_int, pn_int)
 
         if self.open_dosbox_bool == False:
-            messagebox.showinfo("Konverze dokončena", "Konverze dokončena")
+            completed_message = self.localisations.languages_dict[self.config.language]["message_conversion_finished"]
+            messagebox.showinfo(completed_message, completed_message)
 
     def destroy_window(self):
         self.root.destroy()
@@ -188,34 +206,47 @@ class GUI():
     def settings_window(self):
         self.top = tkinter.Toplevel(self.root)
 
-        self.top.title("Možnosti")
+        self.top.title(self.localisations.languages_dict[self.config.language]["options_window_title"])
 
-        dosbox_path_label = tkinter.Label(self.top, text="Aplikace dosbox").grid(row=0, column=0)
+        self.dosbox_path_label = tkinter.Label(self.top)
+        self.dosbox_path_label.grid(row=0, column=0)
         self.dosbox_path_entry = tkinter.Entry(self.top)
         self.dosbox_path_entry.grid(row=0, column=1)
         self.dosbox_path_entry.insert(0, self.config.dosbox_path)
-        dosbox_path_browse_button = tkinter.Button(self.top, text="Vyber soubor", command=self.get_dosbox_path)
-        dosbox_path_browse_button.grid(row=0, column=2)
+        self.dosbox_path_browse_button = tkinter.Button(self.top, command=self.get_dosbox_path)
+        self.dosbox_path_browse_button.grid(row=0, column=2)
 
-        dos_dir_label = tkinter.Label(self.top, text="Kořenový adresář DOS").grid(row=1, column=0)
+        self.dos_dir_label = tkinter.Label(self.top)
+        self.dos_dir_label.grid(row=1, column=0)
         self.dos_dir_entry = tkinter.Entry(self.top)
         self.dos_dir_entry.grid(row=1, column=1)
         self.dos_dir_entry.insert(0, self.config.dos_dir_path)
-        dos_dir_browse_button = tkinter.Button(self.top, text="Vyber adresář", command=self.get_dos_dir)
-        dos_dir_browse_button.grid(row=1, column=2)
+        self.dos_dir_browse_button = tkinter.Button(self.top, command=self.get_dos_dir)
+        self.dos_dir_browse_button.grid(row=1, column=2)
 
-        chars_limit_label = tkinter.Label(self.top, text="Maximální počet znaků pro T602 soubor").grid(row=2, column=0)
+        self.chars_limit_label = tkinter.Label(self.top)
+        self.chars_limit_label.grid(row=2, column=0)
         self.chars_limit_entry = tkinter.Entry(self.top)
         self.chars_limit_entry.grid(row=2, column=1)
         self.chars_limit_entry.insert(0, self.config.chars_limit)
-        self.reset_chars_limit_button = tkinter.Button(self.top, text="Nastavit výchozí hodnotu", command=self.set_default_chars_limit)
+        self.reset_chars_limit_button = tkinter.Button(self.top, command=self.set_default_chars_limit)
         self.reset_chars_limit_button.grid(row=2, column=2)
 
-        apply_settings_button = tkinter.Button(self.top, text="Aplikovat nastavení", command=self.apply_settings)
-        apply_settings_button.grid(row=3, column=1)
+        self.language_label = tkinter.Label(self.top)
+        self.language_label.grid(row=3, column=0)
+        self.language_var = StringVar(self.top)
+        choices = self.localisations.languages_dict.keys()
+        self.language_var.set(self.config.language)
+        self.language_dropdown = tkinter.OptionMenu(self.top, self.language_var, *choices)
+        self.language_dropdown.grid(row=3, column=1)
+
+        self.apply_settings_button = tkinter.Button(self.top, command=self.apply_settings)
+        self.apply_settings_button.grid(row=4, column=1)
 
         exit_settings_button = tkinter.Button(self.top, text="Storno", command=self.exit_settings)
-        exit_settings_button.grid(row=3, column=2)
+        exit_settings_button.grid(row=4, column=2)
+
+        self.populate_all_settings_window_text()
     
     def get_dosbox_path(self):
         dosbox_path = filedialog.askopenfilename(initialdir="/" ,title = "Select file",filetypes = [("executable files","*.exe"), ("all files", "*.*")])
@@ -231,8 +262,12 @@ class GUI():
         dos_dir_path = self.dos_dir_entry.get()
         dosbox_path = self.dosbox_path_entry.get()
         chars_limit = self.chars_limit_entry.get()
+        language = self.language_var.get()
 
-        self.config.write_config(dos_dir_path, dosbox_path, chars_limit)
+        self.config.write_config(dos_dir_path, dosbox_path, chars_limit, language)
+
+        self.populate_all_main_window_text()
+
         self.exit_settings()
 
     def exit_settings(self):
@@ -244,4 +279,37 @@ class GUI():
     def set_default_chars_limit(self):
         self.chars_limit_entry.delete(0, "end")
         self.chars_limit_entry.insert(0, "260000")
+
+    def populate_all_main_window_text(self):
+        language = self.config.language
+
+        self.open_dosbox_label.configure(text=self.localisations.languages_dict[language]["open_dosbox_label"])
+        self.path_to_input_label.configure(text=self.localisations.languages_dict[language]["path_to_input_label"])
+        self.browse_input_button.configure(text=self.localisations.languages_dict[language]["browse_for_file_button_text"])
+        self.output_file_label.configure(text=self.localisations.languages_dict[language]["path_to_output_label"])
+        self.browse_output_button.configure(text=self.localisations.languages_dict[language]["browse_for_file_button_text"])
+        self.tb_label.configure(text=self.localisations.languages_dict[language]["tb_len_label"])
+        self.lm_label.configure(text=self.localisations.languages_dict[language]["lm_label"])
+        self.rm_label.configure(text=self.localisations.languages_dict[language]["rm_label"])
+        self.pl_label.configure(text=self.localisations.languages_dict[language]["pl_label"])
+        self.mt_label.configure(text=self.localisations.languages_dict[language]["mt_label"])
+        self.mb_label.configure(text=self.localisations.languages_dict[language]["mb_label"])
+        self.po_label.configure(text=self.localisations.languages_dict[language]["po_label"])
+        self.pn_label.configure(text=self.localisations.languages_dict[language]["pn_label"])
+        self.adjust_label.configure(text=self.localisations.languages_dict[language]["adjust_label"])
+        self.settings_button.configure(text=self.localisations.languages_dict[language]["settings_button_text"])
+        self.run_conversion_button.configure(text=self.localisations.languages_dict[language]["run_conversion_button_text"])
+        self.competition_text.configure(text=self.localisations.languages_dict[language]["competition_text"])
+
+    def populate_all_settings_window_text(self):
+        language = self.config.language
+
+        self.dosbox_path_label.configure(text=self.localisations.languages_dict[language]["dosbox_path_label"])
+        self.dosbox_path_browse_button.configure(text=self.localisations.languages_dict[language]["browse_for_file_button_text"])
+        self.dos_dir_label.configure(text=self.localisations.languages_dict[language]["dos_dir_label"])
+        self.dos_dir_browse_button.configure(text=self.localisations.languages_dict[language]["browse_for_dir_button_text"])
+        self.chars_limit_label.configure(text=self.localisations.languages_dict[language]["chars_limit_label"])
+        self.reset_chars_limit_button.configure(text=self.localisations.languages_dict[language]["reset_chars_limit_button_text"])
+        self.language_label.configure(text=self.localisations.languages_dict[language]["language_label"])
+        self.apply_settings_button.configure(text=self.localisations.languages_dict[language]["apply_settings_button_text"])
 
