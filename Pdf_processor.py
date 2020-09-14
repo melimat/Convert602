@@ -34,8 +34,6 @@ class Pdf_processor:
 
                 page_str = output_string.getvalue()
 
-                print(str(index))
-
                 whole_text += page_str
 
                 output_string.truncate(0)
