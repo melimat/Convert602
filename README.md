@@ -79,4 +79,6 @@ Development was done on Windows 10
 
         python src/app.py
 
+Other option is to download the release from releases (Convert602.exe) and run it.
+
 **Convert602 was made for [ITNetwork Summer 2020 competition](https://www.itnetwork.cz/programovani/programatorske-souteze/itnetwork-summer-2020-ceny-v-hodnote-10-000-kc)**
