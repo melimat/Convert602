@@ -1,4 +1,4 @@
-# Convert602 - PDF and DOCX converter itnto T602 document format #
+# Convert602 - PDF and DOCX converter into T602 document format #
 
 ## T602 ##
 T602 is a obsolete document editor written for MS-DOS. It was produced by czech company Software-602. Back in the days when PCs started to be popular in the Czech Republic, it was really popular editor with loads of clever features. For some people it was the firs editor they had ever used. But as the time was passing, this software almost completely vanished. But there are still people who use it nowadays. And for these people it is very often critical to get text from "modern" file formats such are PDF and DOCX into T602. This app should help them with that.
